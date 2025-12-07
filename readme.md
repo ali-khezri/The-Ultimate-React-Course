@@ -48,14 +48,9 @@ This repo helps me:
 
 ---
 
-## 👤 Author
+## Author
 
-**Ali Khezri**
-Front-end Developer
-GitHub: [https://github.com/ali-khezri](https://github.com/ali-khezri)
-LinkedIn: [https://www.linkedin.com/in/ali-khezri](https://www.linkedin.com/in/ali-khezri)
-
-```
+**Ali Khezri** — [Github](https://github.com/ali-khezri) | [LinkedIn](https://www.linkedin.com/in/ali-khezri)
 
 ---
 
