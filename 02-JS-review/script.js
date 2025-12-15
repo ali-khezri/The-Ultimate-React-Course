@@ -146,7 +146,7 @@ function getBook(id) {
 /////////////////////////////////////////////////////////////////////////////////////////
 // Destructuring
 
-const book = getBook(1);
+const book = getBook(2);
 book;
 
 // const title = book.title;
@@ -190,3 +190,25 @@ summary;
 const pagesRange = pages > 1000 ? "over a thousand!" : "less than 1000";
 pagesRange;
 console.log(`The book has ${pagesRange} pages`);
+
+console.log(false && "ali");
+console.log(hasMovieAdaptation && "this book has a movie!");
+
+// falsy: 0, '', null, undefined
+console.log("jonas" && "some String!");
+console.log("" && "some String!");
+
+console.log(true || "some string!");
+console.log(false || "some string!");
+
+console.log(book.translations.spanish);
+
+const spanishTranslation = book.translations.spanish || "NOT TRANSLATED";
+spanishTranslation;
+
+console.log(book.reviews.librarything.reviewsCount);
+const countWrong = book.reviews.librarything.reviewsCount || "No Data";
+countWrong;
+
+const count = book.reviews.librarything.reviewsCount ?? "No Data!";
+count;
