@@ -171,11 +171,15 @@ const updatedBook = {
   moviePublicationDate: "2001-12-19",
 
   // Overwriting an existing property
-  pages: 1210,
+  // pages: 1210,
 };
 updatedBook;
 
 const summary = `${title}, a ${pages}-page long bood, was written by ${author} and published in ${
   publicationDate.split("-")[0]
-}`;
+}. The book has ${hasMovieAdaptation ? "" : "not"} been adapted as a movie!`;
 summary;
+
+const pagesRange = pages > 1000 ? "over a thousand!" : "less than 1000";
+pagesRange;
+console.log(`The book has ${pagesRange} pages`);
