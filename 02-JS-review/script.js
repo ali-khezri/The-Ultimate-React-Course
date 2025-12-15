@@ -246,4 +246,12 @@ const essentialData = books.map((book) => ({
 }));
 essentialData;
 
+const longBooks = books
+  .filter((book) => book.pages > 500)
+  .filter((book) => book.hasMovieAdaptation);
+longBooks;
 
+const advertureBooks = books
+  .filter((books) => books.genres.includes("adventure"))
+  .map((book) => book.title);
+advertureBooks;
