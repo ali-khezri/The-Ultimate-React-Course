@@ -259,3 +259,11 @@ advertureBooks;
 const pagesAllBooks = books.reduce((sum, book) => sum + book.pages, 0);
 pagesAllBooks;
 
+const arr = [3, 8, 5, 4, 6, 9, 5, 6];
+sorted = arr.slice().sort((a, b) => a - b);
+
+sorted;
+arr;
+
+const sortedByPages = books.slice().sort((a, b) => b.pages - a.pages);
+sortedByPages;
