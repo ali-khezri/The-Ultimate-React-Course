@@ -69,14 +69,52 @@ function Header() {
 }
 
 function Menu() {
+  const pizzas = pizzaData;
+  const numPizzas = pizzas.length;
+
   return (
     <main className="menu">
       <h2>Our menu</h2>
-      <Pizza />
-      <Pizza />
-      <Pizza />
-      <Pizza />
+
+      {numPizzas > 0 && (
+        <ul className="pizzas">
+          {pizzas.map((pizza) => (
+            <Pizza pizzaObj={pizza} key={pizza.name} />
+          ))}
+        </ul>
+      )}
+
+      <ul className="pizzas">
+        {pizzas.map((pizza) => (
+          <Pizza pizzaObj={pizza} key={pizza.name} />
+        ))}
+      </ul>
+
+      {/* <Pizza
+        name="Pizza Salamino"
+        ingredients="Tomato, mozarella, and pepperoni"
+        photoName="pizzas/salamino.jpg"
+        price={10}
+      />
+      <Pizza
+        name="Pizza Funghi"
+        ingredients="Tomato, mushrooms"
+        price={12}
+        photoName="pizzas/funghi.jpg"
+      /> */}
     </main>
+  );
+}
+
+function Pizza(props) {
+  return (
+    <li className="pizza">
+      <img src={props.pizzaObj.photoName} alt={props.pizzaObj.name} />
+      <div>
+        <h3>{props.pizzaObj.name}</h3> <p>{props.pizzaObj.ingredients}</p>
+        <span>{props.pizzaObj.price}</span>
+      </div>
+    </li>
   );
 }
 
@@ -85,25 +123,22 @@ function Footer() {
   const openHour = 12;
   const closeHour = 22;
   const isOpen = hour >= openHour && hour <= closeHour;
-  console.log(isOpen);
 
   // if (hour >= openHour && hour <= closeHour) alert("We are currently open");
   // else alert("Sorry we are closed");
 
   return (
-    <footer className="footer">{new Date().toLocaleTimeString()} We're currently open</footer>
+    <footer className="footer">
+      {isOpen && (
+        <div className="order">
+          <p>We're open until {closeHour}:00. Come visit us or order online.</p>
+          <button className="btn">Order Now</button>
+        </div>
+      )}
+    </footer>
   );
 
   // return React.createElement("footer", null, "We are currently Open!");
-}
-
-function Pizza() {
-  return (
-    <div>
-      <img src="pizzas/salamino.jpg" alt="Pizza Salamino" />
-      <h3>Pizza Salamino</h3> <p>Tomato, mozarella, and pepperoni</p>
-    </div>
-  );
 }
 
 // React v18
