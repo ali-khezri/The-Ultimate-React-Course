@@ -26,7 +26,6 @@ export default function App() {
   );
 }
 
-
 function Tabbed({ content }) {
   const [activeTab, setActiveTab] = useState(0);
 
@@ -40,7 +39,10 @@ function Tabbed({ content }) {
       </div>
 
       {activeTab <= 2 ? (
-        <TabContent item={content.at(activeTab)} />
+        <TabContent
+          item={content.at(activeTab)}
+          key={content.at(activeTab).summary}
+        />
       ) : (
         <DifferentContent />
       )}
@@ -64,7 +66,7 @@ function TabContent({ item }) {
   const [likes, setLikes] = useState(0);
 
   function handleInc() {
-    setLikes(likes + 1);
+    setLikes((prevLikes) => prevLikes + 1);
   }
 
   return (
