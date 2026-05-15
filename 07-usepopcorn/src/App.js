@@ -53,43 +53,71 @@ const average = (arr) =>
 const KEY = "35a421cf";
 
 export default function App() {
+  const [query, setQuery] = useState("suits");
   const [movies, setMovies] = useState([]);
   const [watched, setWatched] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
+  const [selectedId, setSelectedId] = useState(null);
 
-  const query = "gwresvrwe";
+  // useEffect(function () {
+  //   console.log("After the initial render");
+  // }, []);
 
-  useEffect(function () {
-    async function fetchMovies() {
-      try {
-        setIsLoading(true);
-        const res = await fetch(
-          `http://www.omdbapi.com/?apikey=${KEY}&s=${query}`,
-        );
+  // useEffect(function () {
+  //   console.log("After every render");
+  // });
 
-        if (!res.ok)
-          throw new Error("Something went wrong with fetching movies");
+  // console.log("During render");
 
-        const data = await res.json();
+  // useEffect(
+  //   function () {
+  //     console.log("D");
+  //   },
+  //   [query],
+  // );
 
-        if (data.Response === "False") throw new Error("Movie not found");
+  useEffect(
+    function () {
+      async function fetchMovies() {
+        try {
+          setIsLoading(true);
+          setError("");
+          const res = await fetch(
+            `http://www.omdbapi.com/?apikey=${KEY}&s=${query}`,
+          );
 
-        setMovies(data.Search);
-      } catch (err) {
-        console.error(err.message);
-        setError(err.message);
-      } finally {
-        setIsLoading(false);
+          if (!res.ok)
+            throw new Error("Something went wrong with fetching movies");
+
+          const data = await res.json();
+
+          if (data.Response === "False") throw new Error("Movie not found");
+
+          setMovies(data.Search);
+        } catch (err) {
+          console.error(err.message);
+          setError(err.message);
+        } finally {
+          setIsLoading(false);
+        }
       }
-    }
-    fetchMovies();
-  }, []);
+
+      if (query.length < 3) {
+        setMovies([]);
+        setError("");
+        return;
+      }
+
+      fetchMovies();
+    },
+    [query],
+  );
 
   return (
     <>
       <NavBar>
-        <Search />
+        <Search query={query} setQuery={setQuery} />
         <NumResults movies={movies} />
       </NavBar>
 
@@ -102,8 +130,14 @@ export default function App() {
         </Box>
 
         <Box>
-          <WatchedSummary watched={watched} />
-          <WatchedMoviesList watched={watched} />
+          {selectedId ? (
+            <MovieDetails selectedId={selectedId} />
+          ) : (
+            <>
+              <WatchedSummary watched={watched} />
+              <WatchedMoviesList watched={watched} />{" "}
+            </>
+          )}
         </Box>
       </Main>
     </>
@@ -140,9 +174,7 @@ function Logo() {
   );
 }
 
-function Search() {
-  const [query, setQuery] = useState("");
-
+function Search({ query, setQuery }) {
   return (
     <input
       className="search"
@@ -227,6 +259,10 @@ function Movie({ movie }) {
       </div>
     </li>
   );
+}
+
+function MovieDetails({ selectedId }) {
+  return <div className="details">{selectedId}</div>;
 }
 
 function WatchedSummary({ watched }) {
