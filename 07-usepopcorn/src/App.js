@@ -55,7 +55,7 @@ const average = (arr) =>
 const KEY = "35a421cf";
 
 export default function App() {
-  const [query, setQuery] = useState("banshee");
+  const [query, setQuery] = useState("");
   const [movies, setMovies] = useState([]);
   const [watched, setWatched] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -80,12 +80,16 @@ export default function App() {
 
   useEffect(
     function () {
+      const controller = new AbortController();
+
       async function fetchMovies() {
         try {
           setIsLoading(true);
           setError("");
+
           const res = await fetch(
             `http://www.omdbapi.com/?apikey=${KEY}&s=${query}`,
+            { signal: controller.signal },
           );
 
           if (!res.ok)
@@ -96,9 +100,12 @@ export default function App() {
           if (data.Response === "False") throw new Error("Movie not found");
 
           setMovies(data.Search);
+          setError("");
         } catch (err) {
-          console.error(err.message);
-          setError(err.message);
+          if (err.name !== "AbortError") {
+            console.log(err.message);
+            setError(err.message);
+          }
         } finally {
           setIsLoading(false);
         }
@@ -110,7 +117,13 @@ export default function App() {
         return;
       }
 
+      handleCloseMovie();
+
       fetchMovies();
+
+      return function () {
+        controller.abort();
+      };
     },
     [query],
   );
@@ -313,6 +326,23 @@ function MovieDetails({ selectedId, onCloseMovie, onAddWatched, watched }) {
 
   useEffect(
     function () {
+      function callback(e) {
+        if (e.code === "Escape") {
+          onCloseMovie();
+        }
+      }
+
+      document.addEventListener("keydown", callback);
+
+      return function () {
+        document.removeEventListener("keydown", callback);
+      };
+    },
+    [onCloseMovie],
+  );
+
+  useEffect(
+    function () {
       async function getMovieDetails() {
         setIsLoading(true);
         const res = await fetch(
@@ -334,7 +364,12 @@ function MovieDetails({ selectedId, onCloseMovie, onAddWatched, watched }) {
     function () {
       if (!title) return;
       document.title = `Movie | ${title}`;
+
+      return function () {
+        document.title = "usePopcorn";
+      };
     },
+
     [title],
   );
 
