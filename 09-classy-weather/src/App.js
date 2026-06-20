@@ -138,8 +138,6 @@ class Weather extends React.Component {
     console.log("wather will unmount");
   }
 
-  
-
   render() {
     const {
       temperature_2m_max: max,
