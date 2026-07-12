@@ -1,4 +1,4 @@
-"https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=0&longitude=0"
+// "https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=0&longitude=0";
 
 import { useState } from "react";
 
