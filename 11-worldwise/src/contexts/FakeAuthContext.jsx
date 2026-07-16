@@ -1,5 +1,4 @@
 import { createContext, useContext, useReducer } from "react";
-import Logo from "../components/Logo";
 
 const AuthContext = createContext();
 
@@ -45,7 +44,7 @@ function AuthProvider({ children }) {
 
   return (
     <AuthContext.Provider value={{ user, isAuthenticated, login, logout }}>
-      {Children}
+      {children}
     </AuthContext.Provider>
   );
 }
@@ -55,6 +54,8 @@ function useAuth() {
 
   if (context === undefined)
     throw new Error("Context was used outside AuthProvider");
+
+  return context;
 }
 
 export { AuthProvider, useAuth };
