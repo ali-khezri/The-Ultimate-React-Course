@@ -11,6 +11,7 @@ function SearchOrder() {
     navigate(`/order/${query}`);
     setQuery("");
   }
+
   return (
     <form onSubmit={handleSubmit}>
       <input
