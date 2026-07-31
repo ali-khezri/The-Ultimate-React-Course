@@ -78,6 +78,7 @@ function CreateOrder() {
               type="text"
               name="address"
               disabled={isLoadingAddress}
+              defaultValue={address}
               required
             />
             {addressStatus === "error" && (
@@ -92,7 +93,7 @@ function CreateOrder() {
               <Button
                 type="small"
                 disabled={isLoadingAddress}
-                defaultValue={address}
+
                 onClick={(e) => {
                   e.preventDefault();
                   dispatch(fetchAddress());
