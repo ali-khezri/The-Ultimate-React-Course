@@ -33,12 +33,11 @@ const TableHeader = styled.header`
 function CabinTable() {
   const {
     isLoading,
-    // eslint-disable-next-line
     data: cabins,
     // eslint-disable-next-line
     error,
   } = useQuery({
-    queryKey: ["cabin"],
+    queryKey: ["cabins"],
     queryFn: getCabins,
   });
 

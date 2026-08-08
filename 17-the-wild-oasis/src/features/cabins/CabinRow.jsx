@@ -1,5 +1,11 @@
+/* eslint-disable react/prop-types */
+
 import styled from "styled-components";
 import { formatCurrency } from "../../utils/helpers";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { deleteCabin } from "../../services/apiCabins";
+
+// import PropTypes from "prop-types";
 
 const TableRow = styled.div`
   display: grid;
@@ -40,10 +46,29 @@ const Discount = styled.div`
   color: var(--color-green-700);
 `;
 
-// eslint-disable-next-line
 function CabinRow({ cabin }) {
-  // eslint-disable-next-line
-  const { name, maxCapacity, regularPrice, discount, image } = cabin;
+  const {
+    id: cabinId,
+    name,
+    maxCapacity,
+    regularPrice,
+    discount,
+    image,
+  } = cabin;
+
+  const queryClient = useQueryClient();
+
+  const { isLoading: isDeleting, mutate } = useMutation({
+    mutationFn: deleteCabin,
+    onSuccess: () => {
+      alert("Cabin successfully deleted!");
+
+      queryClient.invalidateQueries({
+        queryKey: ["cabins"],
+      });
+    },
+    onError: (err) => alert(err.message),
+  });
 
   return (
     <TableRow role="row">
@@ -52,9 +77,22 @@ function CabinRow({ cabin }) {
       <div>Fits up to {maxCapacity} guests</div>
       <Price>{formatCurrency(regularPrice)}</Price>
       <Discount>{formatCurrency(discount)}</Discount>
-      <button>Delete</button>
+      <button onClick={() => mutate(cabinId)} disabled={isDeleting}>
+        Delete
+      </button>
     </TableRow>
   );
 }
+
+// CabinRow.propTypes = {
+//   cabin: PropTypes.shape({
+//     id: PropTypes.number.isRequired,
+//     name: PropTypes.string.isRequired,
+//     maxCapacity: PropTypes.number.isRequired,
+//     regularPrice: PropTypes.number.isRequired,
+//     discount: PropTypes.number.isRequired,
+//     image: PropTypes.string.isRequired,
+//   }).isRequired,
+// };
 
 export default CabinRow;
