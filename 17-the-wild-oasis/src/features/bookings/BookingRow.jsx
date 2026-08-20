@@ -1,3 +1,5 @@
+/* eslint-disable react/prop-types */
+
 import styled from "styled-components";
 import { format, isToday } from "date-fns";
 
@@ -36,11 +38,15 @@ const Amount = styled.div`
 
 function BookingRow({
   booking: {
+    // eslint-disable-next-line
     id: bookingId,
+    // eslint-disable-next-line
     created_at,
+    // eslint-disable-next-line
     startDate,
     endDate,
     numNights,
+    // eslint-disable-next-line
     numGuests,
     totalPrice,
     status,
@@ -57,12 +63,10 @@ function BookingRow({
   return (
     <Table.Row>
       <Cabin>{cabinName}</Cabin>
-
       <Stacked>
         <span>{guestName}</span>
         <span>{email}</span>
       </Stacked>
-
       <Stacked>
         <span>
           {isToday(new Date(startDate))
@@ -75,9 +79,7 @@ function BookingRow({
           {format(new Date(endDate), "MMM dd yyyy")}
         </span>
       </Stacked>
-
       <Tag type={statusToTagName[status]}>{status.replace("-", " ")}</Tag>
-
       <Amount>{formatCurrency(totalPrice)}</Amount>
     </Table.Row>
   );
