@@ -5,7 +5,7 @@ import { HiSquare2Stack, HiPencil, HiTrash } from "react-icons/hi2";
 
 import { formatCurrency } from "../../utils/helpers";
 import CreateCabinForm from "./CreateCabinForm";
-import { useDeleteCabin } from "./useDeleteabin";
+import { useDeleteCabin } from "./useDeleteCabin";
 import { useCreateCabin } from "./useCreateCabin";
 import Modal from "../../ui/Modal";
 import ConfirmDelete from "../../ui/ConfirmDelete";
@@ -57,6 +57,7 @@ function CabinRow({ cabin }) {
   const { isDeleting, deleteCabin } = useDeleteCabin();
   // eslint-disable-next-line
   const { isCreating, createCabin } = useCreateCabin();
+  
 
   const {
     id: cabinId,
